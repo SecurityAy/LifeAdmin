@@ -639,23 +639,185 @@ function AuthCallback({ onAuthed }) {
 
 function Dashboard({ onLogout }) {
   const navigate = useNavigate();
+  const sidebarItems = [
+    { name: "Subscriptions", icon: "[]", active: true },
+    { name: "Revenue (beta)", icon: "^" },
+    { name: "Transactions", icon: "<>" },
+    { name: "Reports", icon: "O" },
+    { name: "Team", icon: "U" },
+    { name: "Integrations", icon: "+", badge: "NEW" },
+    { name: "Settings", icon: "*" },
+  ];
+
   return (
     <main className="dashPage">
-      <div className="dashCard">
-        <AuthBrand />
-        <h1>Dashboard</h1>
-        <p>You are signed in successfully. Replace this with your real dashboard module.</p>
-        <button
-          className="submitBtn"
-          onClick={() => {
-            writeAuth(false);
-            onLogout();
-            navigate("/signin", { replace: true });
-          }}
-        >
-          Log out
-        </button>
-      </div>
+      <aside className="dashSidebar">
+        <div className="dashSideHead">
+          <div className="dashLogoMark">LOGO</div>
+          <div className="dashLogoText">
+            <strong>Life Admin OS</strong>
+            <span>My Workspace</span>
+          </div>
+            <button className="dashMenuBtn" type="button" aria-label="menu">
+            |||
+            </button>
+        </div>
+
+        <nav className="dashNav">
+          {sidebarItems.map((item) => (
+            <a key={item.name} href="#" className={`dashNavItem ${item.active ? "active" : ""}`}>
+              <span className="dashNavIcon">{item.icon}</span>
+              <span>{item.name}</span>
+              {item.badge ? <em>{item.badge}</em> : null}
+            </a>
+          ))}
+        </nav>
+
+        <div className="dashQuota">
+          <p>
+            <strong>0</strong> / 10.0 subscriptions
+          </p>
+          <div className="dashQuotaTrack">
+            <span />
+          </div>
+          <button
+            className="dashLogoutBtn"
+            onClick={() => {
+              writeAuth(false);
+              onLogout();
+              navigate("/signin", { replace: true });
+            }}
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <section className="dashMain">
+        <header className="dashTopbar">
+          <div className="dashCrumbs">
+            <span className="dashCrumbIcon">WS</span>
+            <span>My Workspace</span>
+            <span className="dashSlash">/</span>
+            <button className="dashProjectBtn" type="button">
+              <span>[]</span> All Projects <span>v</span>
+            </button>
+          </div>
+          <div className="dashHeadActions">
+            <button type="button" aria-label="help">
+              ?
+            </button>
+            <button type="button" aria-label="announcements">
+              !
+            </button>
+            <button type="button" className="dashAvatar" aria-label="profile">
+              LA
+            </button>
+            <button type="button" aria-label="menu">
+              |||
+            </button>
+          </div>
+        </header>
+
+        <div className="dashBody">
+          <div className="dashTitleRow">
+            <h1>Subscriptions</h1>
+            <div className="dashActionRow">
+              <label className="dashSearch">
+                <span>S</span>
+                <input type="text" value="" readOnly placeholder="Search" aria-label="search subscriptions" />
+                <kbd>Ctrl K</kbd>
+              </label>
+              <button className="dashAddBtn" type="button">
+                + Add subscription
+              </button>
+              <button className="dashMoreBtn" type="button" aria-label="more">
+                ⋮
+              </button>
+            </div>
+          </div>
+
+          <div className="dashFilterRow">
+            <div className="dashFiltersLeft">
+              <button className="dashPillBtn" type="button">
+                <span>Cal</span> This month <span>v</span>
+              </button>
+              <button className="dashPillBtn" type="button">
+                Add filter <span>v</span>
+              </button>
+              <span className="dashStatusPill">
+                <i /> Active
+              </span>
+            </div>
+            <button className="dashPillBtn" type="button">
+              List <span>v</span>
+            </button>
+          </div>
+
+          <div className="dashContentGrid">
+            <article className="subsPanel">
+              <div className="subsHead">
+                <p>0 items</p>
+                <div className="subsControls">
+                  <button type="button">
+                    Sort Size <span>v</span>
+                  </button>
+                  <button type="button">
+                    Columns <span>v</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="subsBody">
+                <div className="emptyArt" aria-hidden="true">
+                  <span className="emptyCircle" />
+                  <span className="emptyPanel" />
+                  <span className="emptyPlus">+</span>
+                </div>
+                <h2>No subscriptions found</h2>
+                <p>Add a new subscription to get started, or try changing your filters.</p>
+              </div>
+
+              <footer className="subsFooter">
+                <span>
+                  Page <strong>1 of 0</strong>
+                </span>
+                <button className="dashPillBtn small" type="button">
+                  Show 25 <span>v</span>
+                </button>
+              </footer>
+            </article>
+
+            <aside className="dashRail">
+              <article className="spendingCard">
+                <header>
+                  <h3>Spending</h3>
+                  <div className="spendingSwitch">
+                    <span>Use average</span>
+                    <button type="button" aria-label="use average toggle">
+                      <i />
+                    </button>
+                  </div>
+                </header>
+                <div className="spendingBody">
+                  <p>Total spent</p>
+                  <strong>$0.00</strong>
+                </div>
+              </article>
+
+              <article className="promoCard">
+                <div className="promoThumb" aria-hidden="true">
+                  Life Admin
+                </div>
+                <div>
+                  <h4>Your obligations, reimagined.</h4>
+                  <p>Dive into records, renewals, and reminders with a clear life-admin command center.</p>
+                </div>
+              </article>
+            </aside>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
